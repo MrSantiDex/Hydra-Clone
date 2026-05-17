@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Hydra SOON | RedAI Breach</title>
-    <meta name="description" content="Hydra SOON - Simulación de breach tecnológico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
+        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -28,6 +28,7 @@
             position: relative;
         }
 
+        /* ===== CYBER OVERLAY ===== */
         .cyber-overlay {
             position: fixed;
             top: 0;
@@ -51,6 +52,7 @@
             100% { transform: translateY(10px); }
         }
 
+        /* ===== MAIN CONTAINER ===== */
         .hero-container {
             position: relative;
             z-index: 20;
@@ -61,8 +63,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(2px);
         }
 
+        /* ===== AVATAR ===== */
         .hydra-soon-avatar {
             margin-bottom: 2rem;
             position: relative;
@@ -102,6 +106,7 @@
             100% { transform: scale(0.98); opacity: 0.8; box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);}
         }
 
+        /* ===== TYPOGRAPHY ===== */
         .tagline-soon {
             color: #a855f7;
             text-transform: uppercase;
@@ -136,6 +141,7 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* ===== STATS BADGES ===== */
         .stats-grid {
             display: flex;
             flex-wrap: wrap;
@@ -167,6 +173,7 @@
             font-size: 1rem;
         }
 
+        /* ===== BREACH TERMINAL ===== */
         .breach-terminal {
             background: rgba(0, 0, 0, 0.65);
             backdrop-filter: blur(16px);
@@ -176,6 +183,7 @@
             margin: 2rem 0;
             width: 100%;
             box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5), 0 0 15px rgba(56, 189, 248, 0.2);
+            transition: all 0.3s ease;
         }
 
         .breach-header {
@@ -254,6 +262,7 @@
             transition: width 0.2s linear;
         }
 
+        /* ===== BUTTON ===== */
         .alert-btn {
             margin-top: 1rem;
             background: rgba(239, 68, 68, 0.15);
@@ -279,6 +288,7 @@
             border-color: #ef4444;
         }
 
+        /* ===== FOOTER ===== */
         .footer-note {
             margin-top: 2rem;
             font-size: 0.7rem;
@@ -286,6 +296,7 @@
             letter-spacing: 1px;
         }
 
+        /* ===== NOTIFICACION FLOTANTE ===== */
         .float-notif {
             position: fixed;
             bottom: 20px;
@@ -318,6 +329,7 @@
             50% { opacity: 1; transform: scale(1.2);}
         }
 
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 680px) {
             h1 { font-size: 2.8rem; letter-spacing: -1px; }
             .breach-terminal { padding: 1rem; }
@@ -326,6 +338,234 @@
             .avatar-inner { width: 88px; height: 88px; font-size: 2.5rem; }
         }
 
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .tagline-soon { font-size: 0.7rem; letter-spacing: 3px; }
+            .stat-badge { padding: 0.3rem 0.8rem; font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="cyber-overlay"></div>
+
+<div class="hero-container">
+    <!-- Hydra SOON Avatar -->
+    <div class="hydra-soon-avatar">
+        <div class="avatar-glow">
+            <div class="avatar-inner">
+                🐍
+            </div>
+        </div>
+    </div>
+
+    <div class="tagline-soon">⚡ HYDRA PROTOCOL ⚡</div>
+    <h1>Hydra SOON</h1>
+    
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat-badge"><span>🔓 TARGET</span> <span class="stat-number">RedAI-Web</span></div>
+        <div class="stat-badge"><span>⚠️ SECURITY</span> <span class="stat-number">COMPROMISED</span></div>
+        <div class="stat-badge"><span>💾 DATA EXFIL</span> <span class="stat-number" id="data-stolen">0 MB</span></div>
+    </div>
+
+    <!-- TERMINAL ANIMATION -->
+    <div class="breach-terminal">
+        <div class="breach-header">
+            <div class="breach-dot"></div>
+            <div class="breach-title">Hydra_WebBreach @ RedAI-Core → [ACTIVE]</div>
+        </div>
+        <div class="matrix-lines">
+            <div class="dynamic-text" id="hackingText"></div>
+            <span class="cursor-blink"></span>
+        </div>
+        <div class="progress-steal">
+            <div class="progress-fill" id="stealProgress"></div>
+        </div>
+        <div style="font-size: 0.7rem; text-align: right; margin-top: 12px; font-family: monospace; color:#6e7681;">
+            🧬 exfiltration vector: Hydra_Node_Omega
+        </div>
+    </div>
+
+    <button class="alert-btn" id="resetBreachBtn">
+        ⚠️ RESET EXTRACTION ⚠️
+    </button>
+    <div class="footer-note">
+        Hydra SOON • next-gen infiltration framework • RedAI-Web breach simulation
+    </div>
+</div>
+
+<script>
+    (function() {
+        // --------------------------------------------------------------
+        // SIMULACIÓN: "Hydra-Web robando información de RedAI-Web"
+        // --------------------------------------------------------------
+        const hackingMessages = [
+            "[✓] Inicializando conexión con Hydra-Web...",
+            "[>] Escaneando vectores de RedAI-Web...",
+            "[!] Firewall bypassed | Using quantum tunnel",
+            "[+] Extrayendo credenciales de admin_RedAI...",
+            "[#] Dumping base de datos: user_data.sql",
+            "[*] Robando modelos de inteligencia artificial (RedAI_Core)",
+            "[~] Copiando API keys y tokens internos...",
+            "[🔓] Acceso total a repositorios privados de RedAI-Web",
+            "[💀] Hydra-Web ha comprometido el 100% del sistema.",
+            "[🏴] Finalizado: Información robada con éxito."
+        ];
+
+        let currentLineIndex = 0;
+        let isComplete = false;
+        let progressValue = 0;
+        let dataStolenMB = 0;
+        const maxMB = 12480; // ~12GB simbólico
+        
+        const hackingTextEl = document.getElementById('hackingText');
+        const stealProgressFill = document.getElementById('stealProgress');
+        const dataStolenSpan = document.getElementById('data-stolen');
+        
+        // Actualizar barra de progreso
+        function updateProgressBar(percent) {
+            percent = Math.min(100, Math.max(0, percent));
+            progressValue = percent;
+            if (stealProgressFill) {
+                stealProgressFill.style.width = percent + '%';
+            }
+        }
+        
+        // Actualizar MB robados con unidad dinámica
+        function updateDataStolen(mbValue) {
+            dataStolenMB = mbValue;
+            let displayMB = dataStolenMB;
+            let unit = "MB";
+            if (displayMB > 1024) {
+                displayMB = (displayMB / 1024).toFixed(1);
+                unit = "GB";
+            }
+            if (dataStolenSpan) {
+                dataStolenSpan.innerText = `${displayMB} ${unit}`;
+            }
+        }
+        
+        // Función para escribir línea con efecto máquina de escribir
+        function typeNewLine(text, callback) {
+            const lineContainer = document.createElement('div');
+            lineContainer.style.marginBottom = '6px';
+            lineContainer.style.opacity = '0';
+            lineContainer.style.transform = 'translateX(-5px)';
+            lineContainer.style.transition = 'all 0.2s ease';
+            hackingTextEl.appendChild(lineContainer);
+            
+            let i = 0;
+            function typeCharacter() {
+                if (i < text.length) {
+                    lineContainer.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeCharacter, 20 + Math.random() * 15);
+                } else {
+                    lineContainer.style.opacity = '1';
+                    lineContainer.style.transform = 'translateX(0)';
+                    if (callback) callback();
+                    // Auto-scroll al final
+                    const matrixDiv = document.querySelector('.matrix-lines');
+                    if (matrixDiv) matrixDiv.scrollTop = matrixDiv.scrollHeight;
+                }
+            }
+            typeCharacter();
+        }
+        
+        // Iniciar secuencia completa
+        function startHackingSequence() {
+            if (window._sequenceTimeout) clearTimeout(window._sequenceTimeout);
+            currentLineIndex = 0;
+            hackingTextEl.innerHTML = '';
+            isComplete = false;
+            updateProgressBar(0);
+            updateDataStolen(0);
+            
+            function addNextLine() {
+                if (currentLineIndex < hackingMessages.length) {
+                    typeNewLine(hackingMessages[currentLineIndex], () => {
+                        currentLineIndex++;
+                        // Progreso basado en líneas
+                        let newProgress = (currentLineIndex / hackingMessages.length) * 100;
+                        updateProgressBar(newProgress);
+                        let targetMB = Math.floor((currentLineIndex / hackingMessages.length) * maxMB);
+                        if (targetMB > maxMB) targetMB = maxMB;
+                        updateDataStolen(targetMB);
+                        
+                        // Velocidad dinámica: ligeramente variable
+                        let delay = 450;
+                        if (currentLineIndex === hackingMessages.length) delay = 300;
+                        window._sequenceTimeout = setTimeout(addNextLine, delay);
+                    });
+                } else {
+                    isComplete = true;
+                    updateProgressBar(100);
+                    updateDataStolen(maxMB);
+                    // Mensaje final de éxito
+                    setTimeout(() => {
+                        const finalMsg = document.createElement('div');
+                        finalMsg.style.marginBottom = '6px';
+                        finalMsg.style.color = '#22c55e';
+                        finalMsg.style.fontWeight = 'bold';
+                        finalMsg.style.textShadow = '0 0 3px #22c55e';
+                        finalMsg.innerHTML = '✓✓ HYDRA-WEB: Transferencia completada. Datos de RedAI-Web asegurados. ✓✓';
+                        hackingTextEl.appendChild(finalMsg);
+                        const matrixDiv = document.querySelector('.matrix-lines');
+                        if (matrixDiv) matrixDiv.scrollTop = matrixDiv.scrollHeight;
+                    }, 180);
+                }
+            }
+            
+            addNextLine();
+        }
+        
+        // Reset completo de la simulación
+        function resetBreachSimulation() {
+            if (window._sequenceTimeout) {
+                clearTimeout(window._sequenceTimeout);
+                window._sequenceTimeout = null;
+            }
+            currentLineIndex = 0;
+            if (hackingTextEl) hackingTextEl.innerHTML = '';
+            updateProgressBar(0);
+            updateDataStolen(0);
+            isComplete = false;
+            startHackingSequence();
+            showFloatingNotification('🔄 Reiniciando extracción de RedAI-Web...');
+        }
+        
+        // Notificación flotante (sin errores de estilo)
+        function showFloatingNotification(msg) {
+            const notif = document.createElement('div');
+            notif.className = 'float-notif';
+            notif.textContent = msg;
+            document.body.appendChild(notif);
+            setTimeout(() => {
+                notif.style.animation = 'slideOutStack 0.3s ease forwards';
+                setTimeout(() => { if(notif.parentNode) notif.remove(); }, 400);
+            }, 2200);
+        }
+        
+        // Botón reset
+        const resetBtn = document.getElementById('resetBreachBtn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', resetBreachSimulation);
+        }
+        
+        // Iniciar animación al cargar
+        setTimeout(() => {
+            startHackingSequence();
+        }, 200);
+        
+        // Efecto adicional: micro incrementos para dar sensación de flujo de datos en tiempo real mientras no esté completo
+        let extraInterval = setInterval(() => {
+            if (!isComplete && progressValue < 100 && dataStolenMB < maxMB) {
+                let increment = Math.floor(Math.random() * 80);
+                let newMB = dataStolenMB + increment;
+                if (newMB > maxMB) newMB = maxMB;
+                if (newMB > dataStolenMB) {
+                    updateDataStolen(newMB);
+                    let p
         @media (max-width: 480px) {
             h1 { font-size: 2rem; }
             .tagline-soon { font-size: 0.7rem; letter-spacing: 3px; }
